@@ -17,6 +17,8 @@ router.post('/',
     body('email').isEmail(),
     // Password should be atleast 5 characters long
     body('password').isLength({ min: 5 }),
+    body('name', "Please enter the name").not().isEmpty(),
+    body('name', "Please enter a name with atleast 2 characters").isLength({ min: 2 }),
     userController.createUser)
 
 // @route DELETE /api/users/:id
