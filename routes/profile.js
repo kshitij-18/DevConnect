@@ -29,4 +29,9 @@ router.get('/all', verifyToken, profileController.getAllProfiles)
 // @desc Returns the profile of the specified user id
 // @access PRIVATE
 router.get('/:id', verifyToken, profileController.getProfileById)
+
+// @route DELETE /api/profile/delete
+// @desc Deletes the id of the user
+// @access PRIVATE
+router.delete('/delete', verifyToken, profileController.deleteProfile)
 module.exports = router

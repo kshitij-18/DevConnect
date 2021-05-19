@@ -19,7 +19,8 @@ const url = `mongodb+srv://kshitij:${process.env.DB_PASSWORD}@cluster0.ihxoq.mon
 mongoose.connect(url, {
     useCreateIndex: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false,
 }).then(() => console.log("Database Connected")).catch(err => console.log("Could not connect to DB"))
 
 app.listen(PORT, () => console.log("Listening on port " + PORT))

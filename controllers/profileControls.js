@@ -72,7 +72,7 @@ const profileController = {
     },
     getAllProfiles: async (req, res) => {
         try {
-            let profiles = await Profile.find().select(['-user'])
+            let profiles = await Profile.find().populate('user', ['name'])
             if (!profiles) {
                 res.status(404).json({ msg: "No user profile found" })
             }
@@ -92,6 +92,22 @@ const profileController = {
                 res.status(404).json({ msg: "Requested Profile not found" })
             }
             res.status(200).json(profile)
+        } catch (error) {
+            if (error.kind == 'ObjectId') {
+                res.status(404).json({ msg: "Profile not found" })
+            }
+            res.status(500).send("Server Error")
+        }
+    },
+    deleteProfile: async (req, res) => {
+        try {
+            let profileRemoved = await Profile.findOneAndRemove({ user: req.user.id })
+            let userRemoved = await User.findOneAndDelete({ _id: req.user.id })
+            if (profileRemoved && userRemoved) {
+                res.status(204).json({ msg: "User deleted successfully" })
+            } else if (profileRemoved && !userRemoved) {
+                res.status(400).json({ msg: "Profile and user could not be deleted" })
+            }
         } catch (error) {
             res.status(500).send("Server Error")
         }
