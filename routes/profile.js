@@ -20,4 +20,13 @@ router.post('/me',
     ],
     profileController.createUserProfile)
 
+// @route GET /api/profile/all
+// @desc Returns all the user profiles
+// @access PRIVATE
+router.get('/all', verifyToken, profileController.getAllProfiles)
+
+// @route GET /api/profile/:id
+// @desc Returns the profile of the specified user id
+// @access PRIVATE
+router.get('/:id', verifyToken, profileController.getProfileById)
 module.exports = router

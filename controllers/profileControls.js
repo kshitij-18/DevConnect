@@ -69,6 +69,32 @@ const profileController = {
         // Create the profile
         profile = await Profile.create(profileField)
         res.status(200).json({ profile })
+    },
+    getAllProfiles: async (req, res) => {
+        try {
+            let profiles = await Profile.find().select(['-user'])
+            if (!profiles) {
+                res.status(404).json({ msg: "No user profile found" })
+            }
+
+            res.status(200).json({ profiles })
+        } catch (error) {
+            console.error(error.message)
+            res.status(500).send("Server error")
+        }
+    },
+    getProfileById: async (req, res) => {
+        try {
+            let id = req.params.id
+            let profile = await Profile.findOne({ user: id }).populate('user', ['name', 'email'])
+
+            if (!profile) {
+                res.status(404).json({ msg: "Requested Profile not found" })
+            }
+            res.status(200).json(profile)
+        } catch (error) {
+            res.status(500).send("Server Error")
+        }
     }
 }
 module.exports = profileController
