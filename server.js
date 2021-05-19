@@ -4,6 +4,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/users')
 const authRoutes = require('./routes/auth')
+const profileRoutes = require('./routes/profile')
 
 const PORT = process.env.PORT || 5000;
 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json())
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes)
+app.use('/api/profile', profileRoutes)
 
 // Connecting to the Database
 const url = `mongodb+srv://kshitij:${process.env.DB_PASSWORD}@cluster0.ihxoq.mongodb.net/DEVDB?retryWrites=true&w=majority`
