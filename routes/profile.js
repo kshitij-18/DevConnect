@@ -43,5 +43,20 @@ router.put('/experience/update', [verifyToken,
     body('company', 'Company name is required').not().isEmpty(),
     body('from', "Please provide valid date type").isDate({ format: "DD-MM-YYYY" })],
 
-    profileController.updateExperience)
+    profileController.addExperience)
+
+// @route DELETE /api/profile/experience/:exp_id
+// @desc Deletes the specific experience of the specific user
+// @access PRIVATE
+router.delete('/experience/:exp_id', verifyToken, profileController.deleteExperienceDetails)
+
+// @route PUT /api/profile/education
+// @desc Adds the education of the user
+// @access PRIVATE
+router.put('/education', [
+    verifyToken,
+    body('school', "Please provide a school name").notEmpty(),
+    body('from', "Please enter a valid date").isDate({ format: "DD-MM-YYYY" })
+], profileController.addEducation)
+
 module.exports = router

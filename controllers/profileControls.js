@@ -115,7 +115,7 @@ const profileController = {
             res.status(500).send("Server Error")
         }
     },
-    updateExperience: async (req, res) => {
+    addExperience: async (req, res) => {
         let errors = validationResult(req)
 
         if (!errors.isEmpty()) {
@@ -132,8 +132,8 @@ const profileController = {
         } = req.body
 
 
-        let formattedFrom = moment(from, "DD-MM-YYYY").format()
-        let formattedTo = moment(to, "DD-MM-YYYY").format()
+        let formattedFrom = moment(from, "DD-MM-YYYY", true).format()
+        let formattedTo = moment(to, "DD-MM-YYYY", true).format()
         const newExp = {
             company,
             current,
@@ -149,6 +149,58 @@ const profileController = {
 
             await profile.save()
             res.status(200).json({ profile })
+        } catch (error) {
+            res.status(500).send(error.message)
+        }
+    },
+    deleteExperienceDetails: async (req, res) => {
+
+        try {
+            let profile = await Profile.findOne({ user: req.user.id })
+
+            let expToRemove = profile.experience.map(item => item.id).indexOf(req.params.exp_id)
+            profile.experience.splice(expToRemove, 1)
+            await profile.save()
+            res.status(200).json(profile)
+        } catch (error) {
+            res.status(500).send(error.message)
+        }
+    },
+    addEducation: async (req, res) => {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        try {
+            let profile = await Profile.findOne({ user: req.user.id })
+            const {
+                school,
+                from,
+                to,
+                current,
+                fieldOfStudy,
+                description
+            } = req.body
+
+            let formattedFrom = moment(from, "DD-MM-YYYY").format()
+            let formattedTo = moment(to, "DD-MM-YYYY").format()
+            const newEdu = {
+                school,
+                current,
+                fieldOfStudy,
+                description
+            }
+
+            newEdu.from = formattedFrom
+            newEdu.to = formattedTo
+
+            profile.education.unshift(newEdu)
+
+            await profile.save()
+            res.json(profile)
+
         } catch (error) {
             res.status(500).send(error.message)
         }
