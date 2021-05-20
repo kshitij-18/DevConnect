@@ -1,6 +1,7 @@
 const Profile = require('../Database/profiledb')
 const User = require('../Database/userdb')
 const { validationResult } = require('express-validator')
+const moment = require('moment')
 
 
 const profileController = {
@@ -56,6 +57,7 @@ const profileController = {
         if (twitter) profileField.social.twitter = twitter
         if (instagram) profileField.social.instagram = instagram
         if (facebook) profileField.social.facebook = facebook
+        if (linkedin) profileField.social.linkedin = linkedin
 
         let profile = await Profile.findOne({ user: req.user.id })
 
@@ -101,15 +103,54 @@ const profileController = {
     },
     deleteProfile: async (req, res) => {
         try {
+            // todo - Remove posts later
             let profileRemoved = await Profile.findOneAndRemove({ user: req.user.id })
             let userRemoved = await User.findOneAndDelete({ _id: req.user.id })
             if (profileRemoved && userRemoved) {
                 res.status(204).json({ msg: "User deleted successfully" })
-            } else if (profileRemoved && !userRemoved) {
+            } else {
                 res.status(400).json({ msg: "Profile and user could not be deleted" })
             }
         } catch (error) {
             res.status(500).send("Server Error")
+        }
+    },
+    updateExperience: async (req, res) => {
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        const {
+            company,
+            from,
+            to,
+            current,
+            role,
+            roleDetails
+        } = req.body
+
+
+        let formattedFrom = moment(from, "DD-MM-YYYY").format()
+        let formattedTo = moment(to, "DD-MM-YYYY").format()
+        const newExp = {
+            company,
+            current,
+            role,
+            roleDetails
+        }
+        newExp.from = formattedFrom
+        newExp.to = formattedTo
+
+        try {
+            let profile = await Profile.findOne({ user: req.user.id })
+            profile.experience.unshift(newExp)
+
+            await profile.save()
+            res.status(200).json({ profile })
+        } catch (error) {
+            res.status(500).send(error.message)
         }
     }
 }

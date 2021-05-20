@@ -34,4 +34,14 @@ router.get('/:id', verifyToken, profileController.getProfileById)
 // @desc Deletes the id of the user
 // @access PRIVATE
 router.delete('/delete', verifyToken, profileController.deleteProfile)
+
+// @route PUT /api/profile/experience/update
+// @desc Updates the expereince profile of the user
+// @access PRIVATE
+router.put('/experience/update', [verifyToken,
+    body('role', "Job title is required").not().isEmpty(),
+    body('company', 'Company name is required').not().isEmpty(),
+    body('from', "Please provide valid date type").isDate({ format: "DD-MM-YYYY" })],
+
+    profileController.updateExperience)
 module.exports = router
