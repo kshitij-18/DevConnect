@@ -72,15 +72,25 @@ postController = {
             res.status(500).send("Server error")
         }
     },
-    // dislikePost: async (req, res) => {
-    //     try {
-    //         // check if the user exists in the likes array
-    //         let post = Post.findById(req.params.id)
-    //     } catch (error) {
-    //         console.error(error.message)
-    //         res.status(500).send("Server error")
-    //     }
-    // }
+    addComment: async (req, res) => {
+        try {
+            let post = await Post.findById(req.params.post_id)
+            let user = await User.findById(req.user.id)
+            const newComment = {
+                user: req.user.id,
+                name: user.name,
+                avatar: user.avatar,
+                text: req.body.text
+            }
+
+            post.comments.unshift(newComment)
+            await post.save()
+            res.json(post)
+        } catch (error) {
+            console.error(error.message)
+            res.status(500).send("Server error")
+        }
+    }
 }
 
 module.exports = postController
