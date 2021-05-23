@@ -2,6 +2,7 @@ const Profile = require('../Database/profiledb')
 const User = require('../Database/userdb')
 const { validationResult } = require('express-validator')
 const moment = require('moment')
+const request = require('request') // used to make requests from the backend
 
 
 const profileController = {
@@ -203,6 +204,40 @@ const profileController = {
 
         } catch (error) {
             res.status(500).send(error.message)
+        }
+    },
+    deleteEducationDetails: async (req, res) => {
+        try {
+            let profile = await Profile.findOne({ user: req.user.id })
+
+            let eduToRemove = profile.education.map(item => item.id).indexOf(req.params.edu_id)
+            profile.education.splice(eduToRemove, 1)
+            await profile.save()
+            res.status(200).json(profile)
+        } catch (error) {
+            res.status(500).send(error.message)
+        }
+    },
+    getGithubRepos: (req, res) => {
+        try {
+            const options = {
+                uri: `https://api.github.com/users/${req.params.username}/repos/?per_page=5&sort=created:asc&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`,
+                method: 'GET',
+                // headers: { 'user-agent': 'node.js' }
+            }
+
+            request(options, (error, response, body) => {
+                if (error) {
+                    console.error(error.message)
+                }
+                if (response.statusCode !== 200) {
+                    res.status(404).json({ msg: "No Repos found" })
+                }
+                res.status(200).json(JSON.parse(body))
+            })
+        } catch (error) {
+            console.error(error.message)
+            res.status(500).send("Server Error")
         }
     }
 }

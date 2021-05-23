@@ -59,4 +59,13 @@ router.put('/education', [
     body('from', "Please enter a valid date").isDate({ format: "DD-MM-YYYY" })
 ], profileController.addEducation)
 
+// @route DELETE /api/profile/education/:edu_id
+// @desc Deletes the specific education of the specific user
+// @access PRIVATE
+router.delete('/education/:edu_id', verifyToken, profileController.deleteEducationDetails)
+
+// @route GET /api/profile/github/:username
+// @desc Gets the repositories of the username specified
+// @access PUBLIC
+router.get('/github/:username', profileController.getGithubRepos)
 module.exports = router
