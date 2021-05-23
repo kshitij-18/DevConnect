@@ -48,13 +48,19 @@ postController = {
 
             let userExist = likes.filter(like => like.user.toString() === req.user.id)
             console.log(userExist)
+            // User has already liked the post
             if (!(userExist.length === 0)) {
-                return res.status(400).json({ msg: "User already liked the post" })
+                let index = likes.indexOf(userExist[0])
+                console.log(req.user.name + "I am disliking post")
+                likes.splice(index, 1)
+            } else {
+                console.log(req.user.name + "I am liking post")
+                likes.unshift({
+                    user: req.user.id
+                })
             }
 
-            likes.unshift({
-                user: req.user.id
-            })
+
 
             post.likes = likes
             await post.save()
