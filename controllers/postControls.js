@@ -65,7 +65,16 @@ postController = {
             console.error(error.message)
             res.status(500).send("Server error")
         }
-    }
+    },
+    // dislikePost: async (req, res) => {
+    //     try {
+    //         // check if the user exists in the likes array
+    //         let post = Post.findById(req.params.id)
+    //     } catch (error) {
+    //         console.error(error.message)
+    //         res.status(500).send("Server error")
+    //     }
+    // }
 }
 
 module.exports = postController
