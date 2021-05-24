@@ -90,6 +90,32 @@ postController = {
             console.error(error.message)
             res.status(500).send("Server error")
         }
+    },
+    deleteComment: async (req, res) => {
+        try {
+            let post = await Post.findById(req.params.post_id)
+
+            // Take out the comment
+            const comment = post.comments.find(comment => comment.id === req.params.comment_id)
+
+            // Check if the comment exists
+            if (!comment) {
+                return res.status(400).json({ msg: "Comment does not exist" })
+            }
+
+            // Check the user
+            if (comment.user.toString() !== req.user.id) {
+                return res.status(401).json({ msg: "User not authorized to delete" })
+            }
+
+            post.comments = post.comments.filter(comment => comment.id !== req.params.comment_id)
+
+            await post.save()
+            res.json(post)
+        } catch (error) {
+            console.error(error.message)
+            res.status(500).send("Server error")
+        }
     }
 }
 

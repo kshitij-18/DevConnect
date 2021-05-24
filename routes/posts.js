@@ -28,4 +28,9 @@ router.put('/like_post/:id', verifyToken, postController.likePost)
 // @access PRIVATE
 router.put('/addComment/:post_id', verifyToken, postController.addComment)
 
+// @route PUT /api/posts/deleteComment/:post_id/:comment_id
+// @desc Comment on a post
+// @access PRIVATE
+router.delete('/deleteComment/:post_id/:comment_id', verifyToken, postController.deleteComment)
+
 module.exports = router
