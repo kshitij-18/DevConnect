@@ -1,8 +1,10 @@
 const Profile = require('../Database/profiledb')
 const User = require('../Database/userdb')
+const Post = require('../Database/postdb')
 const { validationResult } = require('express-validator')
 const moment = require('moment')
 const request = require('request') // used to make requests from the backend
+const axios = require('axios')
 
 
 const profileController = {
@@ -105,9 +107,10 @@ const profileController = {
     deleteProfile: async (req, res) => {
         try {
             // todo - Remove posts later
+            let postsRemoved = await Post.findOneAndDelete({ user: req.user.id })
             let profileRemoved = await Profile.findOneAndRemove({ user: req.user.id })
             let userRemoved = await User.findOneAndDelete({ _id: req.user.id })
-            if (profileRemoved && userRemoved) {
+            if (profileRemoved && userRemoved && postsRemoved) {
                 res.status(204).json({ msg: "User deleted successfully" })
             } else {
                 res.status(400).json({ msg: "Profile and user could not be deleted" })
@@ -218,23 +221,19 @@ const profileController = {
             res.status(500).send(error.message)
         }
     },
-    getGithubRepos: (req, res) => {
+    getGithubRepos: async (req, res) => {
         try {
             const options = {
-                uri: `https://api.github.com/users/${req.params.username}/repos/?per_page=5&sort=created:asc&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`,
+                uri: `https://api.github.com/users/${req.params.username}/repos/?per_page=5&sort=created:asc`,
                 method: 'GET',
                 // headers: { 'user-agent': 'node.js' }
+                headers: {
+                    'user-agent': 'node.js',
+                    Authorization: `token ${process.env.GITHUB_CLIENT_ID}`
+                }
             }
-
-            request(options, (error, response, body) => {
-                if (error) {
-                    console.error(error.message)
-                }
-                if (response.statusCode !== 200) {
-                    res.status(404).json({ msg: "No Repos found" })
-                }
-                res.status(200).json(JSON.parse(body))
-            })
+            const githubRepos = await axios.get(options.uri, options.headers)
+            return res.status(200).json(githubRepos)
         } catch (error) {
             console.error(error.message)
             res.status(500).send("Server Error")
