@@ -12,6 +12,7 @@
   "author": "Kshitij Nath",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",

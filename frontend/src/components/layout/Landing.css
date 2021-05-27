@@ -1,0 +1,33 @@
+.landing{
+	display:flex;
+	align-items:center;
+	flex-direction:column;
+	justify-content: space-evenly
+}
+
+.landing__heading{
+	display:flex;
+	align-items:center;
+	justify-content:space-evenly;
+	width:100vw;
+}
+
+.landing__heading > h1{
+	font-size:5rem;
+	color:white;
+}
+
+.landing__text > p{
+	font-size:2rem;
+	color:beige
+}
+
+.signin__options{
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+}
+
+#signup{
+    margin-left: 1.5em;
+}
