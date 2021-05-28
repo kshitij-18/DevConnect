@@ -1,0 +1,19 @@
+.devlist{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items: inherit;
+    height:100vh;
+}
+.devlist__header{
+    height:fit-content;
+}
+
+.developers{
+    max-width: 60vw;
+    align-items:center;
+    /* margin-left: 15rem;
+    margin-top: 7rem; */
+    flex:0.5;
+}
+

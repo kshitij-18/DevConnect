@@ -77,7 +77,7 @@ const profileController = {
     },
     getAllProfiles: async (req, res) => {
         try {
-            let profiles = await Profile.find().populate('user', ['name'])
+            let profiles = await Profile.find().populate('user', ['name', 'avatar'])
             if (!profiles) {
                 res.status(404).json({ msg: "No user profile found" })
             }
