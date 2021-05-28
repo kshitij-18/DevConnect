@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import './DevList.css'
+
+import Navbar from './Navbar'
 
 const DevList = () => {
     const [devs, setDevs] = useState([])
@@ -23,7 +24,7 @@ const DevList = () => {
     return (
 
         <div className="devlopers">
-            <nav class="navbar bg-dark">
+            {/* <nav class="navbar bg-dark">
                 <h1>
                     <a href="index.html"><i class="fas fa-code"></i> DevConnector</a>
                 </h1>
@@ -32,7 +33,8 @@ const DevList = () => {
                     <li><a href="register.html">Register</a></li>
                     <li><a href="login.html">Login</a></li>
                 </ul>
-            </nav>
+            </nav> */}
+            <Navbar></Navbar>
             <section className="container">
                 <h1 className="large text-primary">
                     Developers
