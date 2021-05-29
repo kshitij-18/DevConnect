@@ -34,42 +34,39 @@ const DevList = () => {
                     <li><a href="login.html">Login</a></li>
                 </ul>
             </nav> */}
-            <Navbar></Navbar>
-            <section className="container">
-                <h1 className="large text-primary">
-                    Developers
+            <h1 className="large text-primary">
+                Developers
                 </h1>
-                <div className="profiles">
-                    {
-                        devs.map(dev => (
-                            <div className="profile bg-light">
-                                <img
-                                    className="round-img"
-                                    src={dev.user.avatar}
-                                    alt=""
-                                />
-                                <div>
-                                    <h2>{dev.user.name}</h2>
-                                    <p>{dev.status && dev.company ? dev.status + " at " + dev.company : dev.status}</p>
-                                    <p>{dev.location}</p>
-                                    <Link to={`/profile/${dev._id}`} className="btn btn-primary">View Profile</Link>
-                                </div>
-                                <ul>
-                                    {
-                                        dev.skills.map(skill => (
-                                            <li>
-                                                <i class="fas fa-check"></i>
-                                                {" " + skill}
-                                            </li>
-                                        ))
-                                    }
-
-                                </ul>
+            <div className="profiles">
+                {
+                    devs.map(dev => (
+                        <div className="profile bg-light">
+                            <img
+                                className="round-img"
+                                src={dev.user.avatar}
+                                alt=""
+                            />
+                            <div>
+                                <h2>{dev.user.name}</h2>
+                                <p>{dev.status && dev.company ? dev.status + " at " + dev.company : dev.status}</p>
+                                <p>{dev.location}</p>
+                                <Link to={`/profile/${dev._id}`} className="btn btn-primary">View Profile</Link>
                             </div>
-                        ))
-                    }
-                </div>
-            </section>
+                            <ul>
+                                {
+                                    dev.skills.map(skill => (
+                                        <li>
+                                            <i class="fas fa-check"></i>
+                                            {" " + skill}
+                                        </li>
+                                    ))
+                                }
+
+                            </ul>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
 
     )

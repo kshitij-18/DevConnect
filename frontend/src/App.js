@@ -8,6 +8,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register'
 import { Provider } from 'react-redux'
 import store from './store'
+import Alert from './components/layout/Alert';
+import Navbar from './components/layout/Navbar';
 
 function App() {
   const [loggedin, setLoggedIn] = useState(false)
@@ -18,11 +20,16 @@ function App() {
           <Route path='/' exact>
             {loggedin == true ? <h1>Home page</h1> : <Landing />}
           </Route>
-          <Switch>
-            <Route exact path='/register' component={Register}></Route>
-            <Route exact path='/login' component={Login}></Route>
-            <Route exact path='/viewdevs' component={DevList}></Route>
-          </Switch>
+          <Navbar />
+          <section className="container">
+            <Alert />
+            <Switch>
+              <Route exact path='/login' component={Login}></Route>
+              <Route exact path='/register' component={Register}></Route>
+              <Route exact path='/viewdevs' component={DevList}></Route>
+            </Switch>
+
+          </section>
         </Router>
       </Provider>
     </div>

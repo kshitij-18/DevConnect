@@ -1,7 +1,4 @@
 import React from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import { Typography, IconButton, Avatar, Button } from '@material-ui/core'
-import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import { Link } from 'react-router-dom'
 
 const Navbar = ({ avatar }) => {
