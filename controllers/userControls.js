@@ -81,6 +81,14 @@ const userController = {
         }).catch(err => {
             res.status(404).json({ msg: "Error in deleting" })
         })
+    },
+    getAuthUser: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select('-password')
+            res.json(user)
+        } catch (error) {
+            res.status(400).json({ msg: "Could not get the user" })
+        }
     }
 }
 

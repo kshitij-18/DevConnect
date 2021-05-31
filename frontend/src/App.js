@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Landing } from './components/layout/Landing';
@@ -10,15 +10,27 @@ import { Provider } from 'react-redux'
 import store from './store'
 import Alert from './components/layout/Alert';
 import Navbar from './components/layout/Navbar';
+import setAuthToken from './utils/setAuthToken'
+import { loadUser } from './actions/auth'
+import { useDispatch, useSelector } from 'react-redux'
 
+if (localStorage.getItem('token')) {
+  setAuthToken(localStorage.getItem('token'))
+}
 function App() {
-  const [loggedin, setLoggedIn] = useState(false)
+
+
+  // const dispatch = useDispatch();
+
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
   return (
     <div className="App">
       <Provider store={store}>
         <Router>
           <Route path='/' exact>
-            {loggedin == true ? <h1>Home page</h1> : <Landing />}
+            <Landing />
           </Route>
           <Navbar />
           <section className="container">

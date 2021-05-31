@@ -4,6 +4,7 @@ import Navbar from '../layout/Navbar'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { setAlert } from '../../actions/alert'
+import register from '../../actions/auth'
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const Register = () => {
             dispatch(setAlert("Passwords do not match", "danger"))
         }
         else {
-            console.log("Success")
+            dispatch(register({ name, email, password }))
         }
     }
     return (
@@ -38,7 +39,8 @@ const Register = () => {
                         value={name}
                         name="name"
                         onChange={e => onChange(e)}
-                        required />
+
+                    />
                 </div>
                 <div className="form-group">
                     <input type="email"
@@ -58,7 +60,7 @@ const Register = () => {
                         name="password"
                         value={password}
                         onChange={e => onChange(e)}
-                        minLength="6"
+
                     />
                 </div>
                 <div className="form-group">
@@ -68,7 +70,7 @@ const Register = () => {
                         name="password2"
                         value={password2}
                         onChange={e => onChange(e)}
-                        minLength="6"
+
                     />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register" />
