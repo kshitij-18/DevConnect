@@ -12,7 +12,7 @@ export const loadUser = () => async dispatch => {
     }
 
     try {
-        const res = await axios.get('/api/auth')
+        const res = await axios.get('/api/users/auth')
         dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -35,11 +35,13 @@ export const loginAction = ({ email, password }) => async dispatch => {
 
     try {
         let res = await axios.post('/api/auth', body, config)
-
+        console.log(res)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         })
+
+        dispatch(loadUser())
     } catch (error) {
         const errors = error.response.data.errors;
 
@@ -68,6 +70,8 @@ const register = ({ name, email, password }) => async dispatch => {
             type: REGISTER_SUCCESS,
             payload: res.data
         })
+
+        dispatch(loadUser())
     } catch (error) {
         const errors = error.response.data.errors;
         if (errors) {

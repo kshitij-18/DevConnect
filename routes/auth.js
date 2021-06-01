@@ -13,10 +13,10 @@ router.get('/', verifyToken, authController.showUser)
 // @desc Signs and gives a token back for the user (Sign in)
 // @access PUBLIC
 router.post('/',
-    [
-        body('email', 'Please enter a valid email').isEmail(),
-        body('password', 'Password is required').exists()
-    ],
+    // [
+    //     body('email', 'Please enter a valid email').isEmail(),
+    //     body('password', 'Password is required').exists()
+    // ],
     authController.Login
 )
 

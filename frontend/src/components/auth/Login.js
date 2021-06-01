@@ -1,22 +1,36 @@
 import React, { useState } from 'react'
 import Navbar from '../layout/Navbar'
 import { Link } from 'react-router-dom'
+import { loginAction } from '../../actions/auth'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
-
+    const dispatch = useDispatch()
     const { email, password } = formData
 
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        if (email && password) {
 
+            dispatch(loginAction({ email, password }))
+            console.log({
+                email, password
+            })
+        }
+        else {
+            console.log('ERRRRROOOOORRRRRRR')
+            console.log({
+                email, password
+            })
+        }
     }
 
     return (
