@@ -11,8 +11,10 @@ import store from './store'
 import Alert from './components/layout/Alert';
 import Navbar from './components/layout/Navbar';
 import setAuthToken from './utils/setAuthToken'
+import Dashboard from './components/dashboard/Dashboard'
 import { loadUser } from './actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
+import ProtectedRoute from './components/routing/ProtectedRoute'
 
 if (localStorage.getItem('token')) {
   setAuthToken(localStorage.getItem('token'))
@@ -20,30 +22,32 @@ if (localStorage.getItem('token')) {
 function App() {
 
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const authState = useSelector(state => state.auth)
 
   useEffect(() => {
-    store.dispatch(loadUser())
+    dispatch(loadUser())
   }, [])
+  const { isAuth, loading } = authState
+  console.log(isAuth)
   return (
     <div className="App">
-      <Provider store={store}>
-        <Router>
-          <Route path='/' exact>
-            <Landing />
-          </Route>
-          <Navbar />
-          <section className="container">
-            <Alert />
-            <Switch>
-              <Route exact path='/login' component={Login}></Route>
-              <Route exact path='/register' component={Register}></Route>
-              <Route exact path='/viewdevs' component={DevList}></Route>
-            </Switch>
+      <Router>
+        <Route path='/' exact>
+          <Landing />
+        </Route>
+        <Navbar />
+        <section className="container">
+          <Alert />
+          <Switch>
+            <Route exact path='/login' component={Login}></Route>
+            <Route exact path='/register' component={Register}></Route>
+            <Route exact path='/viewdevs' component={DevList}></Route>
+            <ProtectedRoute exact path='/dashboard' component={Dashboard} isAuth={isAuth} loading={loading}></ProtectedRoute>
+          </Switch>
 
-          </section>
-        </Router>
-      </Provider>
+        </section>
+      </Router>
     </div>
 
 
