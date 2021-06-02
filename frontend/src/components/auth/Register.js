@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Navbar from '../layout/Navbar'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom'
 import { setAlert } from '../../actions/alert'
 import register from '../../actions/auth'
 
 const Register = () => {
+
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,7 +18,14 @@ const Register = () => {
     const { name, email, password, password2 } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+
     const dispatch = useDispatch();
+    const authState = useSelector(state => state.auth)
+    const { isAuth } = authState
+
+    if (isAuth) {
+        return <Redirect to='/dashboard' />
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== password2) {

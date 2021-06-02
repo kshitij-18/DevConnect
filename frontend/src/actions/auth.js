@@ -1,7 +1,15 @@
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setAlert } from './alert'
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL } from './constants'
+import {
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
+    USER_LOADED,
+    AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
+    LOGOUT
+} from './constants'
 import setAuthToken from '../utils/setAuthToken'
 
 // SetUser
@@ -12,7 +20,7 @@ export const loadUser = () => async dispatch => {
     }
 
     try {
-        const res = await axios.get('/api/users/auth')
+        const res = await axios.get('/api/auth')
         dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -35,7 +43,6 @@ export const loginAction = ({ email, password }) => async dispatch => {
 
     try {
         let res = await axios.post('/api/auth', body, config)
-        console.log(res)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -81,6 +88,12 @@ const register = ({ name, email, password }) => async dispatch => {
             type: REGISTER_FAIL
         })
     }
+}
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: LOGOUT
+    })
 }
 
 export default register

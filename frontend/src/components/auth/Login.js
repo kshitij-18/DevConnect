@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Navbar from '../layout/Navbar'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { loginAction } from '../../actions/auth'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -10,10 +10,18 @@ const Login = () => {
         password: ''
     })
     const dispatch = useDispatch()
+    const authState = useSelector(state => state.auth);
+
+    const { user, isAuth } = authState
+
     const { email, password } = formData
 
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+    if (isAuth) {
+        return <Redirect to='/dashboard' />
     }
 
     const handleSubmit = (e) => {
@@ -21,15 +29,10 @@ const Login = () => {
         if (email && password) {
 
             dispatch(loginAction({ email, password }))
-            console.log({
-                email, password
-            })
         }
         else {
             console.log('ERRRRROOOOORRRRRRR')
-            console.log({
-                email, password
-            })
+
         }
     }
 
