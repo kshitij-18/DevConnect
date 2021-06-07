@@ -15,6 +15,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import { loadUser } from './actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import ProtectedRoute from './components/routing/ProtectedRoute'
+import CreateProfile from './components/Profile-Form/CreateProfile';
 
 if (localStorage.getItem('token')) {
   setAuthToken(localStorage.getItem('token'))
@@ -44,6 +45,7 @@ function App() {
             <Route exact path='/register' component={Register}></Route>
             <Route exact path='/viewdevs' component={DevList}></Route>
             <ProtectedRoute exact path='/dashboard' component={Dashboard} isAuth={isAuth} loading={loading}></ProtectedRoute>
+            <ProtectedRoute exact path='/create-profile' component={CreateProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
           </Switch>
 
         </section>
