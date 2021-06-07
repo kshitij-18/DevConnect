@@ -136,8 +136,8 @@ const profileController = {
         } = req.body
 
 
-        let formattedFrom = moment(from, "DD-MM-YYYY", true).format()
-        let formattedTo = moment(to, "DD-MM-YYYY", true).format()
+        let formattedFrom = moment(from, "YYYY-MM-DD", true).format()
+        let formattedTo = moment(to, "YYYY-MM-DD", true).format()
         const newExp = {
             company,
             current,

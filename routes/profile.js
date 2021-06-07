@@ -40,9 +40,7 @@ router.delete('/delete', verifyToken, profileController.deleteProfile)
 // @access PRIVATE
 router.put('/experience/update', [verifyToken,
     body('role', "Job title is required").not().isEmpty(),
-    body('company', 'Company name is required').not().isEmpty(),
-    body('from', "Please provide valid date type").isDate({ format: "DD-MM-YYYY" })],
-
+    body('company', 'Company name is required').not().isEmpty(),],
     profileController.addExperience)
 
 // @route DELETE /api/profile/experience/:exp_id
@@ -56,7 +54,7 @@ router.delete('/experience/:exp_id', verifyToken, profileController.deleteExperi
 router.put('/education', [
     verifyToken,
     body('school', "Please provide a school name").notEmpty(),
-    body('from', "Please enter a valid date").isDate({ format: "DD-MM-YYYY" })
+    // body('from', "Please enter a valid date").isDate({ format: "YYYY-MM-DD" })
 ], profileController.addEducation)
 
 // @route DELETE /api/profile/education/:edu_id

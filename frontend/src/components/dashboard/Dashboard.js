@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentProfile } from '../../actions/profile'
 import Spinner from '../Spinner'
+import DashboardActionLinks from './DashboardActionLinks'
 
 
 const Dashboard = () => {
@@ -36,7 +37,9 @@ const Dashboard = () => {
             }
 
             {
-                profile !== null ? (<>has</>) : (
+                profile !== null ? (<>
+                    <DashboardActionLinks />
+                </>) : (
 
                     <>
                         <p>You have not yet setup a profile</p>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createProfile } from '../../actions/profile'
+import { createProfile, getCurrentProfile } from '../../actions/profile'
 import { withRouter, Link } from 'react-router-dom'
 
 
-const CreateProfile = ({ history }) => {
-    const [formData, setFormData] = useState({
+const EditProfile = ({ history }) => {
+    const initialState = {
         company: '',
         website: '',
         location: '',
@@ -17,13 +17,39 @@ const CreateProfile = ({ history }) => {
         linkedin: '',
         youtube: '',
         instagram: ''
-    })
+    }
+    const [formData, setFormData] = useState(initialState)
+
+
 
     const [displaySocial, setDisplaySocial] = useState(false);
     const dispatch = useDispatch()
-    const profileState = useSelector(state => state.profile)
 
-    const { profile } = profileState
+
+    const profileState = useSelector(state => state.profile)
+    const { loading } = profileState
+
+    const { profile } = profileState.profile
+    console.log(profile)
+    useEffect(() => {
+        if (!profile) {
+            console.log("Dispatching to get user profile")
+            dispatch(getCurrentProfile())
+        };
+        if (!loading && profile) {
+            const profileData = { ...initialState };
+            for (const key in profile) {
+                if (key in profileData) profileData[key] = profile[key];
+            }
+            for (const key in profile.social) {
+                if (key in profileData) profileData[key] = profile.social[key];
+            }
+            if (Array.isArray(profileData.skills))
+                profileData.skills = profileData.skills.join(', ');
+            setFormData(profileData);
+        }
+    }, [loading, profile])
+
 
     const {
         company,
@@ -45,14 +71,14 @@ const CreateProfile = ({ history }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createProfile(formData, history))
+        dispatch(createProfile(formData, history, true))
     }
 
 
     return (
         <div>
             <h1 className="large text-primary">
-                Create Your Profile
+                Edit Your Profile
             </h1>
             <p className="lead">
                 <i className="fas fa-user"></i> Let's get some information to make your
@@ -162,4 +188,4 @@ const CreateProfile = ({ history }) => {
     )
 }
 
-export default withRouter(CreateProfile)
+export default withRouter(EditProfile)

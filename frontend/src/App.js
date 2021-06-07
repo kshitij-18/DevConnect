@@ -16,6 +16,8 @@ import { loadUser } from './actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import ProtectedRoute from './components/routing/ProtectedRoute'
 import CreateProfile from './components/Profile-Form/CreateProfile';
+import EditProfile from './components/Profile-Form/EditProfile';
+import AddExperience from './components/Profile-Form/AddExperience';
 
 if (localStorage.getItem('token')) {
   setAuthToken(localStorage.getItem('token'))
@@ -46,6 +48,8 @@ function App() {
             <Route exact path='/viewdevs' component={DevList}></Route>
             <ProtectedRoute exact path='/dashboard' component={Dashboard} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/create-profile' component={CreateProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
+            <ProtectedRoute exact path='/edit-profile' component={EditProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
+            <ProtectedRoute exact path='/add-experience' component={AddExperience} isAuth={isAuth} loading={loading}></ProtectedRoute>
           </Switch>
 
         </section>
