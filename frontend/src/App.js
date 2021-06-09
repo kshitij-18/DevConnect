@@ -18,6 +18,7 @@ import ProtectedRoute from './components/routing/ProtectedRoute'
 import CreateProfile from './components/Profile-Form/CreateProfile';
 import EditProfile from './components/Profile-Form/EditProfile';
 import AddExperience from './components/Profile-Form/AddExperience';
+import AddEducation from './components/Profile-Form/AddEducation';
 
 if (localStorage.getItem('token')) {
   setAuthToken(localStorage.getItem('token'))
@@ -50,6 +51,7 @@ function App() {
             <ProtectedRoute exact path='/create-profile' component={CreateProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/edit-profile' component={EditProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/add-experience' component={AddExperience} isAuth={isAuth} loading={loading}></ProtectedRoute>
+            <ProtectedRoute exact path='/add-education' component={AddEducation} isAuth={isAuth} loading={loading}></ProtectedRoute>
           </Switch>
 
         </section>

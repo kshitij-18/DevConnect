@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { addExperience } from '../../actions/profile'
 import { useDispatch, useSelector } from 'react-redux'
-import { withRouter } from "react-router-dom"
+import { withRouter, Link } from "react-router-dom"
 
 const AddExperience = ({ history }) => {
     const initialState = {
@@ -84,7 +84,7 @@ const AddExperience = ({ history }) => {
                     ></textarea>
                 </div>
                 <input type="submit" class="btn btn-primary my-1" />
-                <a class="btn btn-light my-1" href="dashboard.html">Go Back</a>
+                <Link class="btn btn-light my-1" to="/dashboard">Go Back</Link>
             </form>
         </div>
     )
