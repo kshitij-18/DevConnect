@@ -19,6 +19,7 @@ const Navbar = ({ avatar }) => {
     }
     const authLinks = (
         <ul>
+            <li > <Link to="/viewdevs">Developers</Link></li>
             <li >
                 <Link to="/dashboard">
                     <i className="fas fa-user" />{' '}

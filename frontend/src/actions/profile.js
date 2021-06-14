@@ -5,13 +5,46 @@ import {
     PROFILE_ERROR,
     UPDATE_PROFILE,
     CLEAR_PROFILE,
-    ACCOUNT_DELETED
+    ACCOUNT_DELETED,
+    GET_PROFILES
 } from './constants';
 
 // Get current users profile
 export const getCurrentProfile = () => async dispatch => {
     try {
         const { data } = await axios.get('/api/profile/me')
+        dispatch({
+            type: GET_PROFILE,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+// Get all Profiles
+export const getAllProfiles = () => async dispatch => {
+    try {
+        const { data } = await axios.get('/api/profile/all')
+        dispatch({
+            type: GET_PROFILES,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+// Get profile by id
+export const getProfileById = (userId) => async dispatch => {
+    try {
+        const { data } = await axios.get(`/api/profile/${userId}`)
         dispatch({
             type: GET_PROFILE,
             payload: data

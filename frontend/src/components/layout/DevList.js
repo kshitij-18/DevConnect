@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Navbar from './Navbar'
+import { getAllProfiles } from '../../actions/profile'
 
 const DevList = () => {
-    const [devs, setDevs] = useState([])
+    const dispatch = useDispatch()
     useEffect(() => {
-        async function fetchDevs() {
-            try {
-                const res = await axios.get('/api/profile/all')
-                let profiles = res.data.profiles
-                console.log(profiles)
-                setDevs([...profiles])
-                return
-            } catch (error) {
-                console.log(error.message)
-            }
-
-        }
-        fetchDevs();
+        dispatch(getAllProfiles())
     }, [])
+
+    const profileState = useSelector(state => state.profile)
+    console.log(profileState.profiles.profiles)
+    const devs = profileState.profiles.profiles
     return (
 
         <div className="devlopers">
@@ -36,9 +30,9 @@ const DevList = () => {
             </nav> */}
             <h1 className="large text-primary">
                 Developers
-                </h1>
+            </h1>
             <div className="profiles">
-                {
+                {devs &&
                     devs.map(dev => (
                         <div className="profile bg-light">
                             <img
@@ -50,7 +44,7 @@ const DevList = () => {
                                 <h2>{dev.user.name}</h2>
                                 <p>{dev.status && dev.company ? dev.status + " at " + dev.company : dev.status}</p>
                                 <p>{dev.location}</p>
-                                <Link to={`/profile/${dev._id}`} className="btn btn-primary">View Profile</Link>
+                                <Link to={`/profile/${dev.user._id}`} className="btn btn-primary">View Profile</Link>
                             </div>
                             <ul>
                                 {
