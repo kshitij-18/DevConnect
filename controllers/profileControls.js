@@ -137,7 +137,7 @@ const profileController = {
 
 
         let formattedFrom = moment(from, "YYYY-MM-DD", true).format()
-        let formattedTo = moment(to, "YYYY-MM-DD", true).format()
+
         const newExp = {
             company,
             current,
@@ -145,7 +145,14 @@ const profileController = {
             roleDetails
         }
         newExp.from = formattedFrom
-        newExp.to = formattedTo
+
+
+        if (to !== "") {
+            let formattedTo = moment(to, "YYYY-MM-DD", true).format()
+            newExp.to = formattedTo
+        } else {
+            newExp.to = null
+        }
 
         try {
             let profile = await Profile.findOne({ user: req.user.id })
@@ -162,10 +169,9 @@ const profileController = {
         try {
             let profile = await Profile.findOne({ user: req.user.id })
 
-            let expToRemove = profile.experience.map(item => item.id).indexOf(req.params.exp_id)
-            profile.experience.splice(expToRemove, 1)
+            profile.experience = profile.experience.filter((exp) => exp._id.toString() !== req.params.exp_id)
             await profile.save()
-            res.status(200).json(profile)
+            res.status(200).json({ profile })
         } catch (error) {
             res.status(500).send(error.message)
         }
@@ -188,8 +194,8 @@ const profileController = {
                 description
             } = req.body
 
-            let formattedFrom = moment(from, "DD-MM-YYYY").format()
-            let formattedTo = moment(to, "DD-MM-YYYY").format()
+            let formattedFrom = moment(from, "YYYY-MM-DD").format()
+
             const newEdu = {
                 school,
                 current,
@@ -198,12 +204,18 @@ const profileController = {
             }
 
             newEdu.from = formattedFrom
-            newEdu.to = formattedTo
+
+            if (to !== "") {
+                let formattedTo = moment(to, "YYYY-MM-DD").format()
+                newEdu.to = formattedTo
+            } else {
+                newEdu.to = null
+            }
 
             profile.education.unshift(newEdu)
 
             await profile.save()
-            res.json(profile)
+            res.json({ profile })
 
         } catch (error) {
             res.status(500).send(error.message)
@@ -213,8 +225,7 @@ const profileController = {
         try {
             let profile = await Profile.findOne({ user: req.user.id })
 
-            let eduToRemove = profile.education.map(item => item.id).indexOf(req.params.edu_id)
-            profile.education.splice(eduToRemove, 1)
+            profile.education = profile.education.filter((edu) => edu._id.toString() !== req.params.edu_id)
             await profile.save()
             res.status(200).json(profile)
         } catch (error) {

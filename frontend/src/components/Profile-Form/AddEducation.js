@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addEducation } from '../../actions/profile'
-import { withRouter, Link } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 
 const AddEducation = ({ history }) => {
     const initialState = {
@@ -15,6 +15,7 @@ const AddEducation = ({ history }) => {
 
     const [formData, setFormData] = useState(initialState)
     const [isCurrentSchool, setIsCurrentSchool] = useState(false)
+    const dispatch = useDispatch()
 
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -38,6 +39,7 @@ const AddEducation = ({ history }) => {
     const submitHandler = (e) => {
         e.preventDefault();
         console.log(formData);
+        dispatch(addEducation(formData, history))
     }
 
     return (
@@ -47,7 +49,7 @@ const AddEducation = ({ history }) => {
             </h1>
             <p class="lead">
                 <i class="fas fa-graduation-cap"></i> Add any school, bootcamp, etc that
-                    you have attended
+                you have attended
             </p>
             <small>* = required field</small>
             <form class="form" onSubmit={submitHandler}>
@@ -91,7 +93,7 @@ const AddEducation = ({ history }) => {
                             setFormData({ ...formData, current: !current })
                             setIsCurrentSchool(!isCurrentSchool)
                         }} /> Current School or Bootcamp
-          </p>
+                    </p>
                 </div>
                 <div class="form-group">
                     <h4>To Date</h4>

@@ -5,6 +5,7 @@ import { getCurrentProfile } from '../../actions/profile'
 import Spinner from '../Spinner'
 import DashboardActionLinks from './DashboardActionLinks'
 import Experience from './Experience'
+import Education from './Education'
 
 
 const Dashboard = () => {
@@ -45,9 +46,8 @@ const Dashboard = () => {
             {
                 profile !== null ? (<>
                     <DashboardActionLinks />
-                    {console.log(profile.profile)
-                    }
                     <Experience experience={profile.profile.experience} />
+                    <Education education={profile.profile.education} />
                 </>) : (
 
                     <>

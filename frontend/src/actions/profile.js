@@ -3,7 +3,9 @@ import { setAlert } from './alert';
 import {
     GET_PROFILE,
     PROFILE_ERROR,
-    UPDATE_PROFILE
+    UPDATE_PROFILE,
+    CLEAR_PROFILE,
+    ACCOUNT_DELETED
 } from './constants';
 
 // Get current users profile
@@ -115,5 +117,73 @@ export const addEducation = (formData, history) => async dispatch => {
             type: PROFILE_ERROR,
             payload: { msg: error.response.statusText, status: error.response.status }
         })
+    }
+}
+
+// Delete an experience
+export const deleteExperience = id => async dispatch => {
+    try {
+
+        const res = await axios.delete(`/api/profile/experience/${id}`)
+
+        dispatch(
+            {
+                type: UPDATE_PROFILE,
+                payload: res.data
+            }
+        )
+
+        dispatch(setAlert("Experience Removed Successfully", "success"))
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+// Delete Education
+export const deleteEducation = id => async dispatch => {
+    try {
+        const res = await axios.delete(`/api/profile/education/${id}`)
+
+        dispatch(
+            {
+                type: UPDATE_PROFILE,
+                payload: res.data
+            }
+        )
+
+        dispatch(setAlert("Education Removed Successfully", "success"))
+
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+// Delete Account
+export const deleteAccount = () => async dispatch => {
+    if (window.confirm('Are You sure you want to delete your account this action cannot be undone')) {
+        try {
+            const res = await axios.delete(`/api/profile/delete`)
+
+            dispatch(
+                {
+                    type: CLEAR_PROFILE,
+                    type: ACCOUNT_DELETED
+                }
+            )
+
+            dispatch(setAlert("Profile Removed Successfully", "success"))
+
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error.response.statusText, status: error.response.status }
+            })
+        }
     }
 }
