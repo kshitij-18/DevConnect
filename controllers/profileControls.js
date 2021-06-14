@@ -227,7 +227,7 @@ const profileController = {
 
             profile.education = profile.education.filter((edu) => edu._id.toString() !== req.params.edu_id)
             await profile.save()
-            res.status(200).json(profile)
+            res.status(200).json({ profile })
         } catch (error) {
             res.status(500).send(error.message)
         }

@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
 import Moment from 'react-moment'
+import { useDispatch } from 'react-redux'
+import { deleteEducation } from '../../actions/profile'
 
 const Education = ({ education }) => {
-    useEffect(() => {
-        console.log(education)
-    })
+    const dispatch = useDispatch()
+    const deleteEdu = (id) => {
+        dispatch(deleteEducation(id))
+    }
     return (
         <div>
             <h2 className="my-2">
@@ -30,7 +33,7 @@ const Education = ({ education }) => {
                                     {edu.to === null ? ' Current' : <Moment format="MMM YY">{edu.to}</Moment>}
                                 </td>
                                 <td className="hide-sm">
-                                    <button className="btn btn-danger">
+                                    <button className="btn btn-danger" onClick={() => deleteEdu(edu._id)}>
                                         Delete
                                     </button>
                                 </td>
