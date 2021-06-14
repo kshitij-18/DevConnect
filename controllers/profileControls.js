@@ -91,12 +91,12 @@ const profileController = {
     getProfileById: async (req, res) => {
         try {
             let id = req.params.id
-            let profile = await Profile.findOne({ user: id }).populate('user', ['name', 'email'])
+            let profile = await Profile.findOne({ user: id }).populate('user', ['name', 'email', 'avatar'])
 
             if (!profile) {
                 res.status(404).json({ msg: "Requested Profile not found" })
             }
-            res.status(200).json(profile)
+            res.status(200).json({ profile })
         } catch (error) {
             if (error.kind == 'ObjectId') {
                 res.status(404).json({ msg: "Profile not found" })

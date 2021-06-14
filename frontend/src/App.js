@@ -48,12 +48,12 @@ function App() {
             <Route exact path='/login' component={Login}></Route>
             <Route exact path='/register' component={Register}></Route>
             <Route exact path='/viewdevs' component={DevList}></Route>
+            <Route exact path='/profile/:id' component={ProfileScreen}></Route>
             <ProtectedRoute exact path='/dashboard' component={Dashboard} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/create-profile' component={CreateProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/edit-profile' component={EditProfile} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/add-experience' component={AddExperience} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/add-education' component={AddEducation} isAuth={isAuth} loading={loading}></ProtectedRoute>
-            <ProtectedRoute exact path='/profile/:id' component={ProfileScreen} isAuth={isAuth} loading={loading}></ProtectedRoute>
           </Switch>
 
         </section>

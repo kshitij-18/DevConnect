@@ -49,7 +49,7 @@ const Dashboard = () => {
             }
 
             {
-                profile !== null ? (<>
+                loading === false && profile !== null ? (<>
                     <DashboardActionLinks />
                     <Experience experience={profile.profile.experience} />
                     <Education education={profile.profile.education} />

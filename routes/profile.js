@@ -27,8 +27,8 @@ router.get('/all', profileController.getAllProfiles)
 
 // @route GET /api/profile/:id
 // @desc Returns the profile of the specified user id
-// @access PRIVATE
-router.get('/:id', verifyToken, profileController.getProfileById)
+// @access PUBLIC
+router.get('/:id', profileController.getProfileById)
 
 // @route DELETE /api/profile/delete
 // @desc Deletes the id of the user
