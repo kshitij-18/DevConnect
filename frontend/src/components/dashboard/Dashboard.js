@@ -4,19 +4,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentProfile } from '../../actions/profile'
 import Spinner from '../Spinner'
 import DashboardActionLinks from './DashboardActionLinks'
+import Experience from './Experience'
 
 
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const profileState = useSelector(state => state.profile)
+
     const authState = useSelector(state => state.auth)
 
-    const { loading, profile } = profileState
-    const { user } = authState
+
 
     useEffect(() => {
         dispatch(getCurrentProfile())
     }, [])
+    const profileState = useSelector(state => state.profile)
+    const { loading, profile } = profileState
+    const { user } = authState
+    // console.log("This is the profile from Dashboard ")
+    // console.log(profile)
+    console.log(profile)
 
     return (
         <div>
@@ -29,7 +35,7 @@ const Dashboard = () => {
 
                     <p className="lead">
                         <i className="fas fa-user"></i>{" "}
-                         Welcome {user && user.name}
+                        Welcome {user && user.name}
                     </p>
                 </>)
 
@@ -39,6 +45,9 @@ const Dashboard = () => {
             {
                 profile !== null ? (<>
                     <DashboardActionLinks />
+                    {console.log(profile.profile)
+                    }
+                    <Experience experience={profile.profile.experience} />
                 </>) : (
 
                     <>
@@ -49,6 +58,8 @@ const Dashboard = () => {
                     </>)
             }
             {/*  */}
+            {/* <Experience experiences={profile.experience} /> */}
+
         </div>
     )
 }
