@@ -107,7 +107,7 @@ const profileController = {
     deleteProfile: async (req, res) => {
         try {
             // todo - Remove posts later
-            let postsRemoved = await Post.findOneAndDelete({ user: req.user.id })
+            let postsRemoved = await Post.deleteMany({ user: req.user.id })
             let profileRemoved = await Profile.findOneAndRemove({ user: req.user.id })
             let userRemoved = await User.findOneAndDelete({ _id: req.user.id })
             if (profileRemoved && userRemoved && postsRemoved) {

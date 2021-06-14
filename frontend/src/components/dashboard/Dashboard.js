@@ -6,6 +6,7 @@ import Spinner from '../Spinner'
 import DashboardActionLinks from './DashboardActionLinks'
 import Experience from './Experience'
 import Education from './Education'
+import { deleteAccount } from '../../actions/profile'
 
 
 const Dashboard = () => {
@@ -24,6 +25,10 @@ const Dashboard = () => {
     // console.log("This is the profile from Dashboard ")
     // console.log(profile)
     console.log(profile)
+
+    const accountDelete = () => {
+        dispatch(deleteAccount())
+    }
 
     return (
         <div>
@@ -48,6 +53,12 @@ const Dashboard = () => {
                     <DashboardActionLinks />
                     <Experience experience={profile.profile.experience} />
                     <Education education={profile.profile.education} />
+
+                    <div className="my-2">
+                        <button className="btn btn-danger" onClick={accountDelete}>
+                            <i className="fas fa-user-minus"></i> Delete My Account
+                        </button>
+                    </div>
                 </>) : (
 
                     <>
