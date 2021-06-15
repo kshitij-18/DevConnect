@@ -6,6 +6,7 @@ import Spinner from '../Spinner'
 import ProfileTop from './ProfileComponents/ProfileTop'
 import ProfileAbout from './ProfileComponents/ProfileAbout'
 import ProfileExperience from './ProfileComponents/ProfileExperience'
+import ProfileEducation from './ProfileComponents/ProfileEducation'
 
 const ProfileScreen = ({ match }) => {
     const dispatch = useDispatch()
@@ -38,6 +39,10 @@ const ProfileScreen = ({ match }) => {
                     {
                         profile.profile.experience.length > 0 &&
                         <ProfileExperience profile={profile.profile} />
+                    }
+                    {
+                        profile.profile.education.length > 0 &&
+                        <ProfileEducation profile={profile.profile} />
                     }
                 </>
             }
