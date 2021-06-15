@@ -5,6 +5,7 @@ import { getProfileById } from '../../actions/profile'
 import Spinner from '../Spinner'
 import ProfileTop from './ProfileComponents/ProfileTop'
 import ProfileAbout from './ProfileComponents/ProfileAbout'
+import ProfileExperience from './ProfileComponents/ProfileExperience'
 
 const ProfileScreen = ({ match }) => {
     const dispatch = useDispatch()
@@ -34,6 +35,10 @@ const ProfileScreen = ({ match }) => {
                 <>
                     <ProfileTop profile={profile.profile} user={user} />
                     <ProfileAbout profile={profile.profile} user={user} />
+                    {
+                        profile.profile.experience.length > 0 &&
+                        <ProfileExperience profile={profile.profile} />
+                    }
                 </>
             }
 
