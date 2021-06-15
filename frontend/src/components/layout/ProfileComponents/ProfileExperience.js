@@ -15,7 +15,10 @@ const ProfileExperience = ({ profile: { experience } }) => {
                                     "Current"
                             }</p>
                             <p><strong>Position: </strong>{exp.role}</p>
-                            <p><strong>Description : </strong>{exp.roleDetails}</p>
+                            {
+                                exp.roleDetails &&
+                                <p><strong>Description : </strong>{exp.roleDetails}</p>
+                            }
                         </>
 
                     ))
