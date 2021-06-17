@@ -52,7 +52,10 @@ postController = {
             if (!(userExist.length === 0)) {
                 let index = likes.indexOf(userExist[0])
                 console.log(req.user.name + "I am disliking post")
-                likes.splice(index, 1)
+                // likes.splice(index, 1)
+                console.log("The logged in user is ")
+                console.log(req.user.id)
+                likes = likes.filter(like => like.user.toString() !== req.user.id)
             } else {
                 console.log(req.user.name + "I am liking post")
                 likes.unshift({
@@ -65,7 +68,7 @@ postController = {
             post.likes = likes
             await post.save()
 
-            res.json(post)
+            res.json({ post })
 
         } catch (error) {
             console.error(error.message)

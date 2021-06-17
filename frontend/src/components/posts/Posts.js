@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getPosts } from '../../actions/post'
 import Spinner from '../Spinner'
 import PostItem from './PostItem'
 
 const Posts = () => {
     const dispatch = useDispatch()
+
+
+    const postState = useSelector(state => state.post, shallowEqual)
     useEffect(() => {
         dispatch(getPosts())
         console.log()
-    }, [])
+    }, [dispatch, postState])
 
-    const postState = useSelector(state => state.post)
+
     console.log(postState.posts !== {} && postState.loading === false && postState.posts.posts)
-
+    console.log("Displaying state.posts")
+    console.log(postState.posts)
     const { posts } = postState.posts
     const { loading } = postState.loading
     return (
@@ -28,7 +32,11 @@ const Posts = () => {
                         {/* Add Post Component goes here */}
                         <div className="posts">
                             {
+                                console.log(posts)
+                            }
+                            {
                                 posts && posts.map(post => (
+
                                     <PostItem key={post._id} post={post} />
                                 ))
                             }
