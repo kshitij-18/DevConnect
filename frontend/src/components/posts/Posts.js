@@ -3,6 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getPosts } from '../../actions/post'
 import Spinner from '../Spinner'
 import PostItem from './PostItem'
+import PostForm from './PostForm'
 
 const Posts = () => {
     const dispatch = useDispatch()
@@ -29,7 +30,7 @@ const Posts = () => {
                             Posts
                         </h1>
                         <p class="lead"><i class="fas fa-user"></i> Welcome to the community!</p>
-                        {/* Add Post Component goes here */}
+                        <PostForm />
                         <div className="posts">
                             {
                                 console.log(posts)

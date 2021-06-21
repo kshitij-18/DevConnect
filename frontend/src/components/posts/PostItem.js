@@ -1,28 +1,34 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
 import post from '../../reducers/post'
 import { useDispatch, useSelector } from 'react-redux'
-import { likePost } from '../../actions/post'
+import { likePost, deletePost } from '../../actions/post'
 
 const PostItem = ({ post: { _id, name, text, avatar, user, likes, comments, date } }) => {
     const dispatch = useDispatch()
     const authState = useSelector(state => state.auth)
-    const handleLike = (e, id) => {
-        e.preventDefault();
+    const handleLike = useCallback((id) => {
         dispatch(likePost(id))
-    }
+    }, [dispatch])
+
+
+    const handleDeletePost =
+        useCallback((id) => {
+            dispatch(deletePost(id))
+        }, [dispatch])
+
     return (
         <>
             <div class="post bg-white p-1 my-1">
-                <a href="#">
+                <Link to={`profile/${user}`}>
                     <img
                         class="round-img"
                         src={avatar}
                         alt=""
                     />
                     <h4>{name}</h4>
-                </a>
+                </Link>
                 <div>
                     <p>
                         <strong>{text}</strong>
@@ -33,7 +39,7 @@ const PostItem = ({ post: { _id, name, text, avatar, user, likes, comments, date
                     <button type="button"
                         class="btn btn-light"
                         style={{ maxWidth: "10%" }}
-                        onClick={(e) => handleLike(e, _id)}
+                        onClick={(e) => handleLike(_id)}
                     >
                         <i class="fas fa-thumbs-up"></i>
                         <span> {likes.length}</span>
@@ -52,6 +58,7 @@ const PostItem = ({ post: { _id, name, text, avatar, user, likes, comments, date
                             type="button"
                             class="btn btn-danger"
                             style={{ maxWidth: "10%" }}
+                            onClick={(e) => handleDeletePost(_id)}
                         >
                             <i class="fas fa-times"></i>
                         </button>
