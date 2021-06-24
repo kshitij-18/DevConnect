@@ -8,6 +8,12 @@ const verifyToken = require('../middleware/auth')
 // @access PRIVATE
 router.get('/', verifyToken, postController.getAllPosts)
 
+// @route GET /api/posts/:id
+// @desc Gets a specific post
+// @access PRIVATE
+router.get('/:id', verifyToken, postController.getPost)
+
+
 // @route POST /api/posts
 // @desc Creates a post
 // @access PRIVATE
@@ -29,7 +35,7 @@ router.put('/like_post/:id', verifyToken, postController.likePost)
 router.put('/addComment/:post_id', verifyToken, postController.addComment)
 
 // @route PUT /api/posts/deleteComment/:post_id/:comment_id
-// @desc Comment on a post
+// @desc Delete a comment on the post
 // @access PRIVATE
 router.delete('/deleteComment/:post_id/:comment_id', verifyToken, postController.deleteComment)
 

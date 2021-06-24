@@ -5,7 +5,8 @@ import {
     GET_POSTS,
     POST_ERROR,
     UPDATE_LIKES,
-    ADD_POST
+    ADD_POST,
+    GET_POST
 } from './constants'
 
 // Gets all the posts
@@ -15,6 +16,24 @@ export const getPosts = () => async dispatch => {
 
         dispatch({
             type: GET_POSTS,
+            payload: res.data
+        })
+    } catch (error) {
+        console.log(error.toString())
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+// get a single post
+export const getPost = (postId) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/${postId}`);
+
+        dispatch({
+            type: GET_POST,
             payload: res.data
         })
     } catch (error) {

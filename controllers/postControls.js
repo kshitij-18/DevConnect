@@ -14,6 +14,15 @@ postController = {
 
     }
     ,
+    getPost: async (req, res) => {
+        try {
+            let post = await Post.findById(req.params.id)
+            res.json({ post })
+        } catch (error) {
+            console.error(error.message)
+            res.status(500).send("Server error")
+        }
+    },
     createPosts: async (req, res) => {
         try {
             let user = await User.findById(req.user.id).select('-password')
