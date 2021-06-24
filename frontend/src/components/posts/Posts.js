@@ -1,26 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getPosts } from '../../actions/post'
 import Spinner from '../Spinner'
 import PostItem from './PostItem'
 import PostForm from './PostForm'
+import axios from 'axios'
 
 const Posts = () => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
 
-    const postState = useSelector(state => state.post, shallowEqual)
+    // const postState = useSelector(state => state.post, shallowEqual)
+    const [posts, setPosts] = useState([])
     useEffect(() => {
-        dispatch(getPosts())
-        console.log()
-    }, [dispatch, postState])
+        async function fetchPosts() {
+            try {
+                const { data } = await axios.get("/api/posts");
+                setPosts(data.posts)
+            } catch (error) {
+                console.log(error.toString())
+            }
+        }
+        fetchPosts()
+    }, [posts])
 
 
-    console.log(postState.posts !== {} && postState.loading === false && postState.posts.posts)
-    console.log("Displaying state.posts")
-    console.log(postState.posts)
-    const { posts } = postState.posts
-    const { loading } = postState.loading
+    // const { posts } = postState.posts
+    // const { loading } = postState.loading
+    const loading = false
     return (
         <div>
             {

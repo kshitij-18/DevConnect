@@ -1,13 +1,27 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addPost } from '../../actions/post'
 
 const PostForm = () => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const [text, setText] = useState('')
-    const handlePostFormSubmit = (e) => {
+    const handlePostFormSubmit = async (e) => {
         e.preventDefault();
-        dispatch(addPost({ text }))
+        // dispatch(addPost({ text }))
+        try {
+            const config = {
+                headers: {
+                    "Content-type": "application/json"
+                }
+            }
+            console.log(JSON.stringify(text))
+
+            const res = await axios.post("/api/posts", { text }, config)
+            console.log(res.data)
+        } catch (error) {
+            console.log(error.response)
+        }
         setText('')
     }
     return (

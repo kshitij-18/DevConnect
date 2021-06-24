@@ -35,7 +35,7 @@ postController = {
             }
 
             let result = await Post.create(newPost)
-            res.json(result)
+            res.json({ result })
         } catch (error) {
             console.error(error.message)
             res.status(500).send("Server error")
