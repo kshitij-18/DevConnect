@@ -21,6 +21,7 @@ import AddExperience from './components/Profile-Form/AddExperience';
 import AddEducation from './components/Profile-Form/AddEducation';
 import ProfileScreen from './components/layout/ProfileScreen';
 import Posts from './components/posts/Posts';
+import PostDetail from './components/posts/PostDetail';
 
 if (localStorage.getItem('token')) {
   setAuthToken(localStorage.getItem('token'))
@@ -56,6 +57,7 @@ function App() {
             <ProtectedRoute exact path='/add-experience' component={AddExperience} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/add-education' component={AddEducation} isAuth={isAuth} loading={loading}></ProtectedRoute>
             <ProtectedRoute exact path='/posts' component={Posts} isAuth={isAuth} loading={loading}></ProtectedRoute>
+            <ProtectedRoute exact path='/post/:id' component={PostDetail} isAuth={isAuth} loading={loading}></ProtectedRoute>
           </Switch>
 
         </section>

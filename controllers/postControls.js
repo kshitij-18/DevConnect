@@ -97,7 +97,7 @@ postController = {
 
             post.comments.unshift(newComment)
             await post.save()
-            res.json(post)
+            res.json({ post })
         } catch (error) {
             console.error(error.message)
             res.status(500).send("Server error")
